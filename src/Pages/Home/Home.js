@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
+import Navbar from "./Navbar";
 
 const Home = () => {
-    return (
-        <div>
-            Home page
-        </div>
-    );
+  return (
+    <>
+      <Navbar></Navbar>
+    </>
+  );
 };
 
 export default Home;
