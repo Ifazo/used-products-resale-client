@@ -1,29 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import {AuthContext} from '../../Contexts/AuthProvider';
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthProvider";
 
-const Login = () => {
-
+const Signup = () => {
   const { register, handleSubmit } = useForm();
-  const {signIn} = useContext(AuthContext);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { createUser, updateUser } = useContext(AuthContext);
+  const [error, setError] = useState("");
 
-  const from = location.state?.from?.pathname || '/';
-
-  const handleLogin = (data) => {
-    console.log(data)
-    signIn(data.email, data.password)
-    .then(result => {
+  const handleSignup = (data) => {
+    console.log(data);
+    setError("");
+    createUser(data.email, data.password)
+    .then((result) => {
       const user = result.user;
       console.log(user)
-      navigate(from, {replace: true})
-    .catch(error => {
+      const userInfo = {
+        displayName: data.name,
+      }
+      updateUser(userInfo)
+      .then(() => {})
+      .catch((error) => {console.log(error?.message)})
+    .catch((error) => {
         console.log(error?.message);
-      })
+      });
     })
-  }
+    .catch(error => {
+      console.log(error);
+      setError(error?.message);
+    })
+  };
 
   return (
     <>
@@ -31,12 +37,30 @@ const Login = () => {
         <div className="w-full max-w-md space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Sign in to your account
+              Create account
             </h2>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit(handleLogin)}>
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={handleSubmit(handleSignup)}
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
+              <div>
+                <label htmlFor="name" className="sr-only">
+                  Name
+                </label>
+                <input
+                  {...register("name")}
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  placeholder="Your Name"
+                />
+              </div>
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
@@ -52,7 +76,6 @@ const Login = () => {
                   placeholder="Email address"
                 />
               </div>
-
               <div>
                 <label htmlFor="password" className="sr-only">
                   Password
@@ -73,10 +96,10 @@ const Login = () => {
             <div className="flex items-center justify-center">
               <div className="text-sm">
                 <Link
-                  to="/signup"
+                  to="/login"
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
-                  New User !! Please Sign Up
+                  Already have an account !! Please Sign In
                 </Link>
               </div>
             </div>
@@ -97,4 +120,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

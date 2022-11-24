@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../../Components/Card";
 import Hero from "../../Components/Hero";
 import Slider from "../../Components/slider";
