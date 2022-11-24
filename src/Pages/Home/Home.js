@@ -1,10 +1,17 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Card from "../../Components/Card";
+import Hero from "../../Components/Hero";
+import Slider from "../../Components/slider";
+import Stack from "../../Components/Stack";
 
 const Home = () => {
   return (
     <>
-      <Navbar></Navbar>
+      Home Page
+      <Slider></Slider>
+      <Hero></Hero>
+      <Card></Card>
+      <Stack></Stack>
     </>
   );
 };
