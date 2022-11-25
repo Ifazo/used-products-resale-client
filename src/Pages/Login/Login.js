@@ -1,29 +1,37 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {AuthContext} from '../../Contexts/AuthProvider';
+import { AuthContext } from "../../Contexts/AuthProvider";
 
 const Login = () => {
-
   const { register, handleSubmit } = useForm();
-  const {signIn} = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
 
-  const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = (data) => {
-    console.log(data)
-    signIn(data.email, data.password)
-    .then(result => {
+    console.log(data);
+    signIn(data.email, data.password).then((result) => {
       const user = result.user;
-      console.log(user)
-      navigate(from, {replace: true})
-    .catch(error => {
+      console.log(user);
+      navigate(from, { replace: true }).catch((error) => {
         console.log(error?.message);
+      });
+    });
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
       })
-    })
-  }
+      .catch((error) => console.log(error));
+  };
 
   return (
     <>
@@ -88,6 +96,14 @@ const Login = () => {
               >
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
                 <input type="submit" />
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={handleGoogleLogin}
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Sign in with Google
               </button>
             </div>
           </form>

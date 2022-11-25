@@ -6,7 +6,6 @@ import Stack from "../../Components/Stack";
 const Home = () => {
   return (
     <>
-      Home Page
       <Slider></Slider>
       <Hero></Hero>
       <Card></Card>
