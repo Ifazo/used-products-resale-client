@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import CardDetails from "./CardDetails";
 
-const Card = () => {
+const Card = ({category}) => {
+
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/category")
+    .then(res => res.json())
+    .then(data => setCategories(data))
+  }, [])
+  
+
   return (
-    <div>
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <figure className="px-10 pt-10">
-          <img
-            src="https://placeimg.com/400/225/arch"
-            alt="Shoes"
-            className="rounded-xl"
-          />
-        </figure>
-        <div className="card-body items-center text-center">
-          <h2 className="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions">
-            <button className="btn btn-primary">Buy Now</button>
-          </div>
-        </div>
+    <>
+    <h1 className="text-3xl">Categories</h1>
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {
+        categories.map(category => <CardDetails key={categories._id} category={category} ></CardDetails>)
+      }
       </div>
-    </div>
+    </>
   );
 };
 

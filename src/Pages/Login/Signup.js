@@ -22,12 +22,12 @@ const Signup = () => {
       .then(() => {})
       .catch((error) => {console.log(error?.message)})
     .catch((error) => {
-        console.log(error?.message);
+        console.log(error);
       });
     })
     .catch(error => {
       console.log(error);
-      setError(error?.message);
+      setError(error);
     })
   };
 
