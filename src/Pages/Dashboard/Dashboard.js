@@ -1,12 +1,13 @@
 import React from 'react';
 import AddProduct from './seller/AddProduct';
+import MyProducts from './seller/MyProducts';
 
 const Dashboard = () => {
     return (
-        <div>
-            Dashboard page
+        <>
+            <MyProducts></MyProducts>
             <AddProduct></AddProduct>
-        </div>
+        </>
     );
 };
 

@@ -12,23 +12,26 @@ const Signup = () => {
     console.log(data);
     setError("");
     createUser(data.email, data.password)
-    .then((result) => {
-      const user = result.user;
-      console.log(user)
-      const userInfo = {
-        displayName: data.name,
-      }
-      updateUser(userInfo)
-      .then(() => {})
-      .catch((error) => {console.log(error?.message)})
-    .catch((error) => {
+      .then((result) => {
+        const userInfo = {
+          displayName: data.name,
+        };
+        const user = result.user;
+        updateUser(userInfo)
+          .then(() => {console.log(user);})
+          .catch((error) => {
+            console.log(error?.message);
+            setError(error);
+          })
+          .catch((error) => {
+            console.log(error);
+            setError(error);
+          });
+      })
+      .catch((error) => {
         console.log(error);
+        setError(error);
       });
-    })
-    .catch(error => {
-      console.log(error);
-      setError(error);
-    })
   };
 
   return (
@@ -46,6 +49,13 @@ const Signup = () => {
           >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
+              <select className="select select-bordered w-full max-w-xs" {...register("account")}>
+                <option disabled selected>
+                  Select Account type...
+                </option>
+                <option>Buyer</option>
+                <option>Seller</option>
+              </select>
               <div>
                 <label htmlFor="name" className="sr-only">
                   Name

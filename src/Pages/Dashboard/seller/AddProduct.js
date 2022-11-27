@@ -1,20 +1,36 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
+  const handleProducts = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const img = form.img.value;
+    const reprice = form.reprice.value;
+    const price = form.price.value;
+    const year = form.year.value;
+    const description = form.description.value;
+    const product = { name, img, reprice, price, year, description };
+    console.log(product);
 
-    const handleProducts = event => {
-        event.preventDefault();
-        const form = event.target;
-        const name =form.name.value;
-        const img =form.img.value;
-        const reprice =form.reprice.value;
-        const price =form.price.value;
-        const year =form.year.value;
-        const description =form.description.value;
-        const product = {name, img, reprice, price, year, description}
-        console.log(product)
-    }
-    
+    fetch("http://localhost:5000/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          toast.success("Product Added Successfully");
+          form.reset();
+        }
+      });
+  };
+
   return (
     <>
       Add A Product
@@ -28,7 +44,7 @@ const AddProduct = () => {
               Product Name
             </label>
             <input
-                name="name"
+              name="name"
               type="text"
               class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
               id="exampleFormControlInput1"
@@ -45,7 +61,7 @@ const AddProduct = () => {
               Product Image URL
             </label>
             <input
-                name="img"
+              name="img"
               type="text"
               class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
               id="exampleFormControlInput2"
@@ -62,7 +78,7 @@ const AddProduct = () => {
               Resale Price
             </label>
             <input
-                name="reprice"
+              name="reprice"
               type="text"
               class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
               id="exampleFormControlInput3"
@@ -79,7 +95,7 @@ const AddProduct = () => {
               Original Price
             </label>
             <input
-                name="price"
+              name="price"
               type="text"
               class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
               id="exampleFormControlInput4"
@@ -96,7 +112,7 @@ const AddProduct = () => {
               Purchase Year
             </label>
             <input
-                name="year"
+              name="year"
               type="text"
               class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
               id="exampleFormControlInput5"
@@ -113,7 +129,7 @@ const AddProduct = () => {
               Description
             </label>
             <input
-                name="description"
+              name="description"
               type="text"
               class=" form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none "
               id="exampleFormControlInput6"
