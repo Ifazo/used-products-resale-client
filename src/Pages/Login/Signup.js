@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
@@ -13,12 +14,14 @@ const Signup = () => {
     setError("");
     createUser(data.email, data.password)
       .then((result) => {
+        const user = result.user;
+        console.log(user);
+        toast("User created successfully");
         const userInfo = {
           displayName: data.name,
         };
-        const user = result.user;
         updateUser(userInfo)
-          .then(() => {console.log(user);})
+          .then(() => {})
           .catch((error) => {
             console.log(error?.message);
             setError(error);
@@ -53,8 +56,8 @@ const Signup = () => {
                 <option disabled selected>
                   Select Account type...
                 </option>
-                <option>Buyer</option>
                 <option>Seller</option>
+                <option>Buyer</option>
               </select>
               <div>
                 <label htmlFor="name" className="sr-only">
@@ -102,6 +105,7 @@ const Signup = () => {
                 />
               </div>
             </div>
+            {error &&  <p className="text-red-500 text-center">{error?.message}</p>}
 
             <div className="flex items-center justify-center">
               <div className="text-sm">

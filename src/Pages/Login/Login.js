@@ -1,5 +1,5 @@
 import { GoogleAuthProvider } from "firebase/auth";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
@@ -7,6 +7,7 @@ import { AuthContext } from "../../Contexts/AuthProvider";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const { signIn, googleSignIn } = useContext(AuthContext);
+  const [error, setError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
@@ -15,11 +16,12 @@ const Login = () => {
 
   const handleLogin = (data) => {
     console.log(data);
+    setError("");
     signIn(data.email, data.password).then((result) => {
       const user = result.user;
       console.log(user);
       navigate(from, { replace: true }).catch((error) => {
-        console.log(error?.message);
+        setError(error?.message);
       });
     });
   };
@@ -50,33 +52,31 @@ const Login = () => {
                   Email address
                 </label>
                 <input
-                  {...register("email")}
+                  {...register("email", {required: true })}
                   id="email-address"
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
                   className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Email address"
                 />
               </div>
-
               <div>
                 <label htmlFor="password" className="sr-only">
                   Password
                 </label>
                 <input
-                  {...register("password")}
+                  {...register("password", {required: true })}
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="password"
-                  required
                   className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
             </div>
+            {error &&  <p className="text-red-500 text-center">{error?.message}</p>}
 
             <div className="flex items-center justify-center">
               <div className="text-sm">

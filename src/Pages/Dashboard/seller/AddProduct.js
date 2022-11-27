@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const AddProduct = () => {
+  const {user} = useContext(AuthContext)
+  console.log(user);
+  const {displayName, email} = user;
   const handleProducts = (event) => {
     event.preventDefault();
     const form = event.target;
+    const category = form.category.value;
     const name = form.name.value;
     const img = form.img.value;
     const reprice = form.reprice.value;
     const price = form.price.value;
     const year = form.year.value;
     const description = form.description.value;
-    const product = { name, img, reprice, price, year, description };
+    const product = { displayName, email, category, name, img, reprice, price, year, description };
     console.log(product);
 
     fetch("http://localhost:5000/products", {
@@ -35,6 +40,14 @@ const AddProduct = () => {
     <>
       Add A Product
       <form onSubmit={handleProducts}>
+      <select className="select select-bordered w-full max-w-xs" name="category">
+                <option disabled selected>
+                  Select Products catagories...
+                </option>
+                <option>Surface</option>
+                <option>Chromebook</option>
+                <option>Macbook</option>
+              </select>
         <div class="flex justify-center">
           <div class="mb-3 xl:w-96">
             <label

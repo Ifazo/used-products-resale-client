@@ -1,12 +1,12 @@
 import React from 'react';
-import AddProduct from './seller/AddProduct';
-import MyProducts from './seller/MyProducts';
+import SellerDashboard from './Seller/SellerDashboard';
+import UserDashboard from './Users/UserDashboard';
 
 const Dashboard = () => {
     return (
         <>
-            <MyProducts></MyProducts>
-            <AddProduct></AddProduct>
+            <UserDashboard></UserDashboard>
+            <SellerDashboard></SellerDashboard>
         </>
     );
 };

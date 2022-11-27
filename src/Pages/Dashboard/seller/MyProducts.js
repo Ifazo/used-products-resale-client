@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductDetails from './ProductDetails';
 
-const MyProducts = ({product}) => {
+const MyProducts = () => {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         fetch("http://localhost:5000/products")
