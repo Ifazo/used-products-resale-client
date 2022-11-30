@@ -21,8 +21,12 @@ const router = createBrowserRouter([
             },
             {
                 path: '/category/:name',
-                loader: ({params}) => fetch(`http://localhost:5000/category/${params.name}`),
-                element: <Category></Category>
+                element: <PrivateRoutes><Category></Category></PrivateRoutes>,
+                loader: ({params}) => fetch(`http://localhost:5000/category/${params.name}`)
+            },
+            {
+                path: '/category',
+                element: <PrivateRoutes><Category></Category></PrivateRoutes>,
             },
             {
                 path: '/dashboard',

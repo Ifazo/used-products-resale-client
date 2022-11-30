@@ -1,19 +1,17 @@
 import React from "react";
+import OrderModal from "./OrderModal";
 
 const ProductCard = ({ product }) => {
-  const { name, img, reprice, description } = product;
+  const {_id, name, img, reprice, description } = product;
 
+  const handlePlaceOrder = (event) => {};
 
-  
   return (
-    <div>
+    <form onClick={handlePlaceOrder}>
       <div>
         <div class="relative">
           <div class="relative w-full h-72 rounded-lg overflow-hidden">
-            <img
-              src={img}
-              alt=""
-            />
+            <img src={img} alt="" />
           </div>
           <div class="relative mt-4">
             <h3 class="text-sm font-medium text-gray-900">{name}</h3>
@@ -28,14 +26,14 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
         <div class="mt-6">
-          <button
-            class="relative flex bg-gray-100 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-200"
-          >
+          <button data-bs-toggle="modal"
+            data-bs-target="#exampleModalFullscreen" class="relative flex bg-gray-100 border border-transparent rounded-md py-2 px-8 items-center justify-center text-sm font-medium text-gray-900 hover:bg-gray-200">
             Book Now
           </button>
         </div>
       </div>
-    </div>
+      <OrderModal key={_id} product={product}></OrderModal>
+    </form>
   );
 };
 
