@@ -24,7 +24,11 @@ const Category = () => {
         products.map(product => <CategoryProduct key={_id} product={product}></CategoryProduct>)
       }
     </div>
-    <ProductModal></ProductModal>
+    <div>
+      {
+        products.map(product => <ProductModal key={_id} product={product}></ProductModal>)
+      }
+    </div>
     </>
   );
 };

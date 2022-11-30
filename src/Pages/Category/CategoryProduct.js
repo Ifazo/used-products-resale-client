@@ -1,8 +1,8 @@
 import React from "react";
 
 const CategoryProduct = (product) => {
-    console.log(product.product);
-    const {_id, name, img, reprice, price, description, year, displayName } = product.product;
+    // console.log(product.product);
+    const { name, img, reprice, price, description, year, displayName } = product.product;
   return (
     <>
       <div className="card lg:card-side shadow-xl">
@@ -24,7 +24,7 @@ const CategoryProduct = (product) => {
             <p className="text-gray-500">Location:{description}</p>
           </div>
           <div className="card-actions justify-center">
-            <label htmlFor="my-modal-6" className="btn btn-primary">Book Now</label>
+            <label htmlFor="my-modal" className="btn btn-primary">Book Now</label>
           </div>
         </div>
       </div>
