@@ -10,7 +10,7 @@ const Category = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/products?category=${name}`)
+    fetch(`http://localhost:5000/categoryproducts?category=${name}`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data)
