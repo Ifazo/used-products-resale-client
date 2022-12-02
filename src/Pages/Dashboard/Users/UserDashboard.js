@@ -1,11 +1,10 @@
 import React from 'react';
-import AllProducts from './AllProducts';
+import UserProduct from './UserProduct';
 
 const UserDashboard = () => {
     return (
         <div>
-            <h3 className="text-3xl">User Dashboard</h3>
-            <AllProducts></AllProducts>
+            <UserProduct></UserProduct>
         </div>
     );
 };

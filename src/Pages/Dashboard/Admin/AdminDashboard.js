@@ -12,7 +12,19 @@ const AdminDashboard = () => {
       });
   }, []);
 
-//   const {_id} = users;
+  const handleDelete = (_id) => {
+    fetch(`http://localhost:5000/users/${_id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result) {
+          toast.success("User deleted successfully");
+          const remainingUsers = users.filter((user) => user._id !== _id);
+          setUsers(remainingUsers);
+        }
+      });
+  };
 
   const handleAdmin = _id => {
     console.log(_id)
@@ -24,6 +36,8 @@ const AdminDashboard = () => {
             console.log(data);
             if(data.modifiedCount > 0){
                 toast.success("Admin added successfully");
+                const remainingUsers = users.filter(user => user._id !== _id);
+                setUsers(remainingUsers);
             }
 
         })
@@ -31,7 +45,7 @@ const AdminDashboard = () => {
         
   return (
     <>
-      Admin Dashboard
+      <h3 className="text-3xl font-bold text-gray-900">List of All Users</h3>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -50,7 +64,7 @@ const AdminDashboard = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>{ user?.role !== 'admin' && <button onClick={() =>handleAdmin(user._id)} className="btn btn-sm btn-primary">Admin</button>}</td>
-                <td><button className="btn btn-sm btn-secondary">Delete</button></td>
+                <td><button onClick={() => handleDelete(user._id)} className="btn btn-sm btn-secondary">Delete</button></td>
               </tr>)
             }
           </tbody>

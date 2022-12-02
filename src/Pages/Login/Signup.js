@@ -23,7 +23,7 @@ const Signup = () => {
         };
         updateUser(userInfo)
           .then(() => {
-            saveUser(data.name)
+            saveUser(data.name, data.email)
         })
           .catch((error) => {
             console.log(error);

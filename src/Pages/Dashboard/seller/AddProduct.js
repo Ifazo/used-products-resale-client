@@ -38,7 +38,7 @@ const AddProduct = () => {
 
   return (
     <>
-      Add A Product
+      <h3 className="text-3xl font-bold text-gray-900 m-10">Add a Products</h3>
       <form onSubmit={handleProducts}>
       <select className="select select-bordered w-full max-w-xs" name="category">
                 <option disabled selected>
