@@ -1,16 +1,17 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 
 const Signup = () => {
   const { register, handleSubmit } = useForm();
   const { createUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSignup = (data) => {
-    console.log(data);
+    // console.log(data);
     setError("");
     createUser(data.email, data.password)
       .then((result) => {
@@ -21,9 +22,11 @@ const Signup = () => {
           displayName: data.name,
         };
         updateUser(userInfo)
-          .then(() => {})
+          .then(() => {
+            saveUser(data.name)
+        })
           .catch((error) => {
-            console.log(error?.message);
+            console.log(error);
             setError(error);
           })
           .catch((error) => {
@@ -37,6 +40,18 @@ const Signup = () => {
       });
   };
 
+  const saveUser = (name, email) => {
+    const user = {name, email}
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {  "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    }).then(res => res.json())
+    .then(data => {
+      console.log('save user',data);
+      navigate('/')
+    })
+  }
   return (
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -53,11 +68,8 @@ const Signup = () => {
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <select className="select select-bordered w-full max-w-xs" {...register("account")}>
-                <option disabled selected>
-                  Select Account type...
-                </option>
+                <option selected>user</option>
                 <option>Seller</option>
-                <option>Buyer</option>
               </select>
               <div>
                 <label htmlFor="name" className="sr-only">
@@ -105,7 +117,6 @@ const Signup = () => {
                 />
               </div>
             </div>
-            {error &&  <p className="text-red-500 text-center">{error?.message}</p>}
 
             <div className="flex items-center justify-center">
               <div className="text-sm">
@@ -117,7 +128,9 @@ const Signup = () => {
                 </Link>
               </div>
             </div>
-
+              {error && (
+                <div className="text-red-500 text-center">{error.message}</div>
+              )}
             <div>
               <button
                 type="submit"
