@@ -8,14 +8,24 @@ const MyProducts = () => {
 
   const [products, setProducts] = useState([]);
 
+  
   useEffect(() => {
     fetch(`http://localhost:5000/myproducts?email=${email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setProducts(data);
-      });
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      setProducts(data);
+    });
   }, [email]);
+
+  fetch('http://localhost:5000/advertize', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ products }),
+  })
+
   return (
     <>
     <h3 className="text-3xl font-bold text-gray-900">All product of Seller</h3>
@@ -26,7 +36,6 @@ const MyProducts = () => {
               <th>No.</th>
               <th>Product Name</th>
               <th>Price</th>
-              <th>Delete</th>
               <th>Advertize</th>
             </tr>
           </thead>
@@ -37,7 +46,6 @@ const MyProducts = () => {
               <th>{index+1}</th>
               <td>{product.name}</td>
               <td>{product.price}</td>
-              <td>Blue</td>
               <td><button className="btn btn-primary btn-sm">Delete</button></td>
             </tr>)
             }

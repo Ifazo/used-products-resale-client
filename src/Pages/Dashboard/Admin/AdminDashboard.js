@@ -36,8 +36,6 @@ const AdminDashboard = () => {
             console.log(data);
             if(data.modifiedCount > 0){
                 toast.success("Admin added successfully");
-                const remainingUsers = users.filter(user => user._id !== _id);
-                setUsers(remainingUsers);
             }
 
         })

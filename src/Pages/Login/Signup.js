@@ -48,10 +48,22 @@ const Signup = () => {
       body: JSON.stringify(user)
     }).then(res => res.json())
     .then(data => {
-      console.log('save user',data);
+      getToken(email);
       navigate('/')
     })
   }
+
+ const getToken = email => {
+    fetch(`http://localhost:5000/jwt?email=${email}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data.accessToken){
+        localStorage.setItem('token', data.accessToken)
+        navigate('/')
+      }
+    })
+  }
+
   return (
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
